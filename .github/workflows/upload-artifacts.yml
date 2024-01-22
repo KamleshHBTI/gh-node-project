@@ -2,7 +2,7 @@ name: Upload Atrifacts
 on: 
   push:
     branches:
-     [main, workflow_dispatch]
+     [main]
 jobs:
   test: 
    runs-on: ubuntu-latest
