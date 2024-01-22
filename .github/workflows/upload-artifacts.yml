@@ -25,15 +25,21 @@ jobs:
         run: npm ci
       - name: build app
         run: npm run build
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with: 
-      #     name: dist-files
-      #     path: dist
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with: 
+          name: dist-files
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get Build artifacts
+        uses: actions/download-atrifact@v4
+        with:
+          path: dist-files
+      - name: Output Content
+        run: ls    
       - name: Deploy
         run: echo "Deploying ..."
 
