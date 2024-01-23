@@ -1,0 +1,40 @@
+name: Cache Dependency 
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache npm package dependency
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hasFiles('**/package-lock.json')}}
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+      - name: Test code
+        run: npm run test
+  build: 
+    needs: test
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache npm package dependency
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hasFiles('**/package-lock.json')}}
+      - name: Install dependencies
+        run: npm ci
+      - name: build app
+        run: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying ..."
