@@ -9,8 +9,10 @@ jobs:
       - name: Cache npm package dependency
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: '~/.npm'
           key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
+          restote-keys: |
+            deps-node-modules-
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -26,8 +28,10 @@ jobs:
       - name: Cache npm package dependency
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: '~/.npm'
           key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
+          restote-keys: |
+            deps-node-modules-
       - name: Install dependencies
         run: npm ci
       - name: build app
